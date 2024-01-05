@@ -4,7 +4,7 @@ from support import *
 from timer import Timer
 
 class Player(pygame.sprite.Sprite):
-  def __init__(self, pos, group, collision_sprites, tree_sprites) -> None:
+  def __init__(self, pos, group, collision_sprites, tree_sprites, interaction_sprites) -> None:
     super().__init__(group)
 
     self.import_assets()
@@ -51,6 +51,8 @@ class Player(pygame.sprite.Sprite):
 
     # interaction
     self.tree_sprites = tree_sprites
+    self.interaction_sprites = interaction_sprites
+    self.sleep = False
 
   def use_tool(self):
     if self.selected_tool == "hoe":
@@ -96,7 +98,6 @@ class Player(pygame.sprite.Sprite):
       elif keys[pygame.K_DOWN]:
         self.direction.y = 1
         self.status = "down"
-
       else:
         self.direction.y = 0
 
@@ -109,11 +110,13 @@ class Player(pygame.sprite.Sprite):
       else:
         self.direction.x = 0
 
+      # tool use
       if keys[pygame.K_SPACE]:
         self.timers["tool use"].activate()
         self.direction = pygame.math.Vector2()
         self.frame_index = 0
 
+      # tool switch
       if keys[pygame.K_q] and not self.timers["tool switch"].active:
         self.timers["tool switch"].activate()
         self.tool_index += 1
@@ -121,17 +124,28 @@ class Player(pygame.sprite.Sprite):
           self.tool_index = 0
         self.selected_tool = self.tools[self.tool_index]
 
+      # seed use
       if keys[pygame.K_LCTRL]:
         self.timers["seed use"].activate()
         self.direction = pygame.math.Vector2()
         self.frame_index = 0
 
+      # seed switch
       if keys[pygame.K_e] and not self.timers["seed switch"].active:
         self.timers["seed switch"].activate()
         self.seed_index += 1
         if self.seed_index >= len(self.seeds):
           self.seed_index = 0
         self.selected_seed = self.seeds[self.seed_index]
+
+      if keys[pygame.K_RETURN]:
+        collided_interaction_sprite = pygame.sprite.spritecollide(self, self.interaction_sprites, False)
+        if collided_interaction_sprite:
+          if collided_interaction_sprite[0].name == "Trader":
+            pass
+          else:
+            self.status = "left_idle"
+            self.sleep = True
 
   def get_status(self):
     if self.direction.magnitude() == 0:
