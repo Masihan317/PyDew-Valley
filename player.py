@@ -43,14 +43,14 @@ class Player(pygame.sprite.Sprite):
 
     # inventory
     self.item_inventory = {
-      "wood": 20,
-      "apple": 20,
-      "corn": 20,
-      "tomato": 20
+      "wood": 0,
+      "apple": 0,
+      "corn": 0,
+      "tomato": 0
     }
     self.seed_inventory = {
-      "corn": 5,
-      "tomato": 5
+      "corn": 10,
+      "tomato": 10
     }
     self.money = 200
 
@@ -62,7 +62,7 @@ class Player(pygame.sprite.Sprite):
     self.toggle_shop = toggle_shop
 
     # sounds
-    self.watering = pygame.mixer.Sound("../audio/water.mp3")
+    self.watering = pygame.mixer.Sound("./audio/water.mp3")
     self.watering.set_volume(0.2)
 
   def use_tool(self):
@@ -94,7 +94,7 @@ class Player(pygame.sprite.Sprite):
                        "up_water": [], "down_water": [], "left_water": [], "right_water": []}
 
     for animation in self.animations.keys():
-      full_path = "../graphics/character/" + animation
+      full_path = "./graphics/character/" + animation
       self.animations[animation] = import_folder(full_path)
 
   def animate(self, dt):
