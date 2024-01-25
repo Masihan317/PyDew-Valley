@@ -1,5 +1,6 @@
 import pygame
 from settings import *
+from support import resource_path
 
 class Overlay:
   def __init__(self, player) -> None:
@@ -7,8 +8,8 @@ class Overlay:
     self.player = player
 
     overlay_path = "./graphics/overlay/"
-    self.tools_surf = {tool: pygame.image.load(f"{overlay_path}{tool}.png").convert_alpha() for tool in player.tools}
-    self.seeds_surf = {seed: pygame.image.load(f"{overlay_path}{seed}.png").convert_alpha() for seed in player.seeds}
+    self.tools_surf = {tool: pygame.image.load(resource_path(f"{overlay_path}{tool}.png")).convert_alpha() for tool in player.tools}
+    self.seeds_surf = {seed: pygame.image.load(resource_path(f"{overlay_path}{seed}.png")).convert_alpha() for seed in player.seeds}
 
   def display(self):
     tool_surf = self.tools_surf[self.player.selected_tool]

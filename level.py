@@ -38,15 +38,15 @@ class Level:
 		self.shop_active = False
 
 		# music
-		self.success = pygame.mixer.Sound("./audio/success.wav")
+		self.success = pygame.mixer.Sound(resource_path("./audio/success.wav"))
 		self.success.set_volume(0.4)
 
-		self.music = pygame.mixer.Sound("./audio/music.mp3")
+		self.music = pygame.mixer.Sound(resource_path("./audio/music.mp3"))
 		self.music.set_volume(0.2)
 		self.music.play(loops = -1)
 
 	def setup(self):
-		tmx_data = load_pygame("./data/map.tmx")
+		tmx_data = load_pygame(resource_path("./data/map.tmx"))
 
 		# house
 		for layer in ["HouseFloor", "HouseFurnitureBottom"]:
@@ -72,7 +72,7 @@ class Level:
 				[self.all_sprites, self.collision_sprites])
 
 		# water
-		water_frames = import_folder("./graphics/water")
+		water_frames = import_folder(resource_path("./graphics/water"))
 		for x, y, surf in tmx_data.get_layer_by_name("Water").tiles():
 			Water(
 				(x * TILE_SIZE, y * TILE_SIZE),
@@ -135,7 +135,7 @@ class Level:
 
 		Generic(
 			pos = (0, 0),
-			surf = pygame.image.load("./graphics/world/ground.png").convert_alpha(),
+			surf = pygame.image.load(resource_path("./graphics/world/ground.png")).convert_alpha(),
 			groups=self.all_sprites,
 			z = LAYERS["ground"])
 

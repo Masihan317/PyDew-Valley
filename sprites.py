@@ -3,6 +3,7 @@ from settings import *
 from random import randint, choice
 from settings import LAYERS
 from timer import Timer
+from support import *
 
 class Generic(pygame.sprite.Sprite):
   def __init__(self, pos, surf, groups, z = LAYERS["main"]) -> None:
@@ -75,10 +76,10 @@ class Tree(Generic):
       stump_path += "small.png"
     else:
       stump_path += "large.png"
-    self.stump_surf = pygame.image.load(stump_path).convert_alpha()
+    self.stump_surf = pygame.image.load(resource_path(stump_path)).convert_alpha()
 
     # apples
-    self.apple_surf = pygame.image.load("./graphics/fruit/apple.png").convert_alpha()
+    self.apple_surf = pygame.image.load(resource_path("./graphics/fruit/apple.png")).convert_alpha()
     self.apple_pos = APPLE_POS[name]
     self.apple_sprites = pygame.sprite.Group()
     self.all_sprites = all_sprites
@@ -87,7 +88,7 @@ class Tree(Generic):
     self.player_add = player_add
 
     # sounds
-    self.axe_sound = pygame.mixer.Sound("./audio/axe.mp3")
+    self.axe_sound = pygame.mixer.Sound(resource_path("./audio/axe.mp3"))
 
   def damage(self):
 

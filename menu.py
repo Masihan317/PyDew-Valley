@@ -1,6 +1,7 @@
 import pygame
 from settings import *
 from timer import Timer
+from support import resource_path
 
 class Menu:
   def __init__(self, player, toggle_menu) -> None:
@@ -9,7 +10,7 @@ class Menu:
     self.player = player
     self.toggle_menu = toggle_menu
     self.display_surface = pygame.display.get_surface()
-    self.font = pygame.font.Font("./font/LycheeSoda.ttf", 30)
+    self.font = pygame.font.Font(resource_path("./font/LycheeSoda.ttf"), 30)
 
     # options
     self.width = 400
